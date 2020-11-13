@@ -3,27 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/index.scss';
 
 import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 import Hero from "@/components/shared/Hero";
 
 
 const MyApp = ({ Component, pageProps }) => {
+  const isHomePage = () => Component.name === 'Home';
+
   return (
     <div className="portfolio-app">
       <Navbar />
-      {Component.name === 'Home' && <Hero />}
+      {isHomePage() && <Hero />}
       <div className="container">
         <Component {...pageProps} />
       </div>
+      {isHomePage() && <Footer />}
     </div>
   )
-}
-
-MyApp.getInitialProps = async (context) => {
-  const initialProps = App.getInitialProps && await App.getInitialProps(context);
-
-  console.log(initialProps);
-
-  return { pageProps: { appData: 'Hello _App Component', ...initialProps.pageProps } }
 }
 
 export default MyApp;
