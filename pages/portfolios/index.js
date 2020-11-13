@@ -3,6 +3,17 @@ import axios from 'axios';
 import PortfolioCard from '@/components/portfolios/Card';
 import Link from 'next/link';
 
+const graphDeletePortfolio = (id) => {
+  const query = `
+    mutation DeletePortfolio {
+      deletePortfolio(id: "${id}")
+    }
+  `;
+
+  return axios.post('http://localhost:3000/graphql', { query })
+    .then(res => res.data.data.deletePortfolio)
+}
+
 const graphFetchPortfolios = () => {
   const query = `
     query Portfolios {
@@ -102,6 +113,17 @@ const Portfolios = ({ data }) => {
     setPortfolios(newPortfolios);
   }
 
+  const deletePortfolio = async (id) => {
+    const deletedId = await graphDeletePortfolio(id);
+    const index = portfolios.findIndex(p => p._id === deletedId);
+    const newPortfolios = [...portfolios];
+    if (index !== -1) {
+      newPortfolios.splice(index, 1);
+    }
+
+    setPortfolios(newPortfolios);
+  }
+
   return (
     <>
       <section className="section-title">
@@ -130,6 +152,10 @@ const Portfolios = ({ data }) => {
                   onClick={() => updatePortfolio(portfolio._id)}
                   className="btn btn-warning"
                 >Update Portfolio</button>
+                <button 
+                  onClick={() => deletePortfolio(portfolio._id)}
+                  className="btn btn-danger"
+                >Delete Portfolio</button>
               </div>
             ))
           }
