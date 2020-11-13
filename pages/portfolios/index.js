@@ -1,14 +1,33 @@
-const Portfolios = ({ testData, appData }) => {
+import axios from 'axios';
+
+const fetchPortfolios = () => {
+  const query = `
+    query Portfolios {
+      portfolios {
+        _id,
+        title,
+        companyWebsite,
+        location,
+      }
+    }
+  `;
+
+  return axios.post('http://localhost:3000/graphql', { query })
+    .then(res => res.data.data.portfolios)
+}
+
+const Portfolios = ({ portfolios }) => {
 
   return (
     <>
       <section className="section-title">
         <div className="px-2">
           <div className="pt-5 pb-4">
-            <h1>Portfolios {testData} {appData}</h1>
+            <h1>Portfolios</h1>
           </div>
         </div>
       </section>
+      { JSON.stringify(portfolios) }
       <section className="pb-5">
         <div className="row">
           <div className="col-md-4">
@@ -54,8 +73,10 @@ const Portfolios = ({ testData, appData }) => {
   )
 }
 
-Portfolios.getInitialProps = () => {
-  return { testData: 'sdfsf' }
+Portfolios.getInitialProps = async () => {
+  const portfolios = await fetchPortfolios();
+
+  return { portfolios }
 }
 
 export default Portfolios;
