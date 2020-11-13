@@ -3,7 +3,7 @@ import axios from 'axios';
 import PortfolioCard from '@/components/portfolios/Card';
 import Link from 'next/link';
 
-const fetchPortfolios = () => {
+const graphFetchPortfolios = () => {
   const query = `
     query Portfolios {
       portfolios {
@@ -21,7 +21,7 @@ const fetchPortfolios = () => {
     .then(res => res.data.data.portfolios)
 }
 
-const handleCreatePortrolio = () => {
+const graphCreatePortrolio = () => {
   const query = `
     mutation CreatePortfolio {
       createPortfolio (input: {
@@ -52,12 +52,52 @@ const handleCreatePortrolio = () => {
     .then(data => data.createPortfolio)
 }
 
+const graphUpdatePortrolio = (id) => {
+  const query = `
+    mutation UpdatePortfolio {
+      updatePortfolio (id: "${id}", input: {
+        title: "asdfsf"
+        company: "updated company"
+        companyWebsite: "update.new.com"
+        location: "Spain updated"
+        jobTitle: "Front end engineer updated"
+        description: "Work, work"
+        startDate: "01/01/2020"
+        endDate: "01/01/2020"
+      }) {
+        _id,
+        title,
+        company,
+        companyWebsite
+        location
+        jobTitle
+        description
+        startDate
+        endDate
+      }
+    }
+  `;
+
+  return axios.post('http://localhost:3000/graphql', { query })
+    .then(({ data: graph }) => graph.data)
+    .then(data => data.updatePortfolio)
+}
+
 const Portfolios = ({ data }) => {
   const [portfolios, setPortfolios] = useState(data?.portfolios);
 
   const createPortfolio = async () => {
-    const newPortfolio = await handleCreatePortrolio();
+    const newPortfolio = await graphCreatePortrolio();
     const newPortfolios = [...portfolios, newPortfolio];
+
+    setPortfolios(newPortfolios);
+  }
+
+  const updatePortfolio = async (id) => {
+    const updatedPortfolio = await graphUpdatePortrolio(id);
+    const index = portfolios.findIndex(p => p._id === id);
+    const newPortfolios = [...portfolios];
+    newPortfolios[index] = updatedPortfolio;
 
     setPortfolios(newPortfolios);
   }
@@ -86,6 +126,10 @@ const Portfolios = ({ data }) => {
                     <PortfolioCard portfolio={portfolio} />
                   </a>
                 </Link>
+                <button 
+                  onClick={() => updatePortfolio(portfolio._id)}
+                  className="btn btn-warning"
+                >Update Portfolio</button>
               </div>
             ))
           }
@@ -98,7 +142,7 @@ const Portfolios = ({ data }) => {
 }
 
 Portfolios.getInitialProps = async () => {
-  const portfolios = await fetchPortfolios();
+  const portfolios = await graphFetchPortfolios();
 
   return { data: { portfolios } }
 }
