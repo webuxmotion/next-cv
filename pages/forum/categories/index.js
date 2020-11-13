@@ -1,5 +1,4 @@
-import Navbar from "../navbar";
-
+import Navbar from "@/components/shared/Navbar";
 
 const Categories = () => {
 
