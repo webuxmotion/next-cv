@@ -9,6 +9,7 @@ const handle = app.getRequestHandler();
 const { portfolioTypes } = require('./graphql/types');
 const { portfolioQueries, portfolioMutations } = require('./graphql/resolvers');
 
+require('./db').connect();
 
 app.prepare().then(() => {
   const server = express()
