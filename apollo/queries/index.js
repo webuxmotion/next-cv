@@ -78,3 +78,9 @@ export const UPDATE_PORTFOLIO = gql`
     }
   }
 `;
+
+export const DELETE_PORTFOLIO = gql`
+  mutation DeletePortfolio($id: ID) {
+    deletePortfolio(id: $id)
+  }
+`;

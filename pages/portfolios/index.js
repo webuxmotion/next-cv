@@ -5,24 +5,11 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { getDataFromTree } from '@apollo/react-ssr';
 
 import withApollo from '@/hoc/withApollo';
-import { GET_PORTFOLIOS, CREATE_PORTFOLIO, UPDATE_PORTFOLIO } from '@/apollo/queries';
-
-const graphDeletePortfolio = (id) => {
-  const query = `
-    mutation DeletePortfolio {
-      deletePortfolio(id: "${id}")
-    }
-  `;
-
-  return axios.post('http://localhost:3000/graphql', { query })
-    .then(res => res.data.data.deletePortfolio)
-}
+import { GET_PORTFOLIOS, CREATE_PORTFOLIO, UPDATE_PORTFOLIO, DELETE_PORTFOLIO } from '@/apollo/queries';
 
 const Portfolios = () => {
   const { data, loading } = useQuery(GET_PORTFOLIOS);
   const portfolios = data && data.portfolios || [];
-
-  const [updatePortfolio] = useMutation(UPDATE_PORTFOLIO);
 
   const [createPortfolio] = useMutation(CREATE_PORTFOLIO, {
     update(cache, { data: { createPortfolio } }) {
@@ -36,9 +23,21 @@ const Portfolios = () => {
     }
   });
 
-  const deletePortfolio = async (id) => {
-    await graphDeletePortfolio(id);
-  }
+  const [updatePortfolio] = useMutation(UPDATE_PORTFOLIO);
+
+  const [deletePortfolio] = useMutation(DELETE_PORTFOLIO, {
+    update(cache, { data: { deletePortfolio: deletedId } }) {
+      const { portfolios } = cache.readQuery({ query: GET_PORTFOLIOS });
+      const index = portfolios.findIndex(p => p._id === deletedId);
+      const newPortfolios = [...portfolios];
+      newPortfolios.splice(index, 1);
+
+      cache.writeQuery({
+        query: GET_PORTFOLIOS,
+        data: { portfolios: newPortfolios }
+      });
+    }
+  });
 
   if (loading) return <h1>Loading...</h1>;
 
@@ -71,7 +70,7 @@ const Portfolios = () => {
                   className="btn btn-warning"
                 >Update Portfolio</button>
                 <button 
-                  onClick={() => deletePortfolio(portfolio._id)}
+                  onClick={() => deletePortfolio({ variables: { id: portfolio._id} })}
                   className="btn btn-danger"
                 >Delete Portfolio</button>
               </div>
