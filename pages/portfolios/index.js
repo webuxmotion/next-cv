@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PortfolioCard from '@/components/portfolios/Card';
 import Link from 'next/link';
-
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { getDataFromTree } from '@apollo/react-ssr';
 
+import withApollo from '@/hoc/withApollo';
 import { GET_PORTFOLIOS, CREATE_PORTFOLIO } from '@/apollo/queries';
 
 const graphDeletePortfolio = (id) => {
@@ -139,4 +140,4 @@ const Portfolios = () => {
   )
 }
 
-export default Portfolios;
+export default withApollo(Portfolios, { getDataFromTree });
