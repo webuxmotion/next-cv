@@ -53,3 +53,28 @@ export const CREATE_PORTFOLIO = gql`
     }
   }
 `;
+
+export const UPDATE_PORTFOLIO = gql`
+  mutation UpdatePortfolio($id: ID) {
+    updatePortfolio (id: $id, input: {
+      title: "asdfsf"
+      company: "updated company"
+      companyWebsite: "update.new.com"
+      location: "Spain updated"
+      jobTitle: "Front end engineer updated"
+      description: "Work, work"
+      startDate: "01/01/2020"
+      endDate: "01/01/2020"
+    }) {
+      _id,
+      title,
+      company,
+      companyWebsite
+      location
+      jobTitle
+      description
+      startDate
+      endDate
+    }
+  }
+`;
