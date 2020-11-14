@@ -28,3 +28,28 @@ export const GET_PORTFOLIOS = gql`
     }
   }
 `;
+
+export const CREATE_PORTFOLIO = gql`
+  mutation CreatePortfolio {
+    createPortfolio (input: {
+      title: "New from client"
+      company: "new company"
+      companyWebsite: "new.com"
+      location: "Spain"
+      jobTitle: "Front end engineer"
+      description: "Work, work"
+      startDate: "01/01/2014"
+      endDate: "01/01/2016"
+    }) {
+      _id,
+      title,
+      company,
+      companyWebsite
+      location
+      jobTitle
+      description
+      startDate
+      endDate
+    }
+  }
+`;

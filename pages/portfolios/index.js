@@ -3,9 +3,9 @@ import axios from 'axios';
 import PortfolioCard from '@/components/portfolios/Card';
 import Link from 'next/link';
 
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 
-import { GET_PORTFOLIOS } from '@/apollo/queries';
+import { GET_PORTFOLIOS, CREATE_PORTFOLIO } from '@/apollo/queries';
 
 const graphDeletePortfolio = (id) => {
   const query = `
@@ -16,37 +16,6 @@ const graphDeletePortfolio = (id) => {
 
   return axios.post('http://localhost:3000/graphql', { query })
     .then(res => res.data.data.deletePortfolio)
-}
-
-const graphCreatePortrolio = () => {
-  const query = `
-    mutation CreatePortfolio {
-      createPortfolio (input: {
-        title: "New from client"
-        company: "new company"
-        companyWebsite: "new.com"
-        location: "Spain"
-        jobTitle: "Front end engineer"
-        description: "Work, work"
-        startDate: "01/01/2014"
-        endDate: "01/01/2016"
-      }) {
-        _id,
-        title,
-        company,
-        companyWebsite
-        location
-        jobTitle
-        description
-        startDate
-        endDate
-      }
-    }
-  `;
-
-  return axios.post('http://localhost:3000/graphql', { query })
-    .then(({ data: graph }) => graph.data)
-    .then(data => data.createPortfolio)
 }
 
 const graphUpdatePortrolio = (id) => {
@@ -84,20 +53,28 @@ const Portfolios = () => {
   const [portfolios, setPortfolios] = useState([]);
   const [getPortfolios, { loading, data }] = useLazyQuery(GET_PORTFOLIOS);
 
+  const [createPortfolio] = useMutation(CREATE_PORTFOLIO, {
+    update(cache, { data: { createPortfolio } }) {
+      const { portfolios } = cache.readQuery({ query: GET_PORTFOLIOS });
+      const newPortfolios = [...portfolios, createPortfolio];
+
+      cache.writeQuery({
+        query: GET_PORTFOLIOS,
+        data: { portfolios: newPortfolios }
+      });
+    }
+  });
+
   useEffect(() => {
     getPortfolios();
   }, [])
 
-  if (data && data.portfolios.length > 0 && portfolios.length === 0) { setPortfolios(data.portfolios) };
+  if (
+    data && data.portfolios.length > 0 && 
+    (portfolios.length === 0 || data.portfolios.length !== portfolios.length)
+  ) { setPortfolios(data.portfolios) };
 
   if (loading) { return <div>loading...</div> };
-
-  const createPortfolio = async () => {
-    const newPortfolio = await graphCreatePortrolio();
-    const newPortfolios = [...portfolios, newPortfolio];
-
-    setPortfolios(newPortfolios);
-  }
 
   const updatePortfolio = async (id) => {
     const updatedPortfolio = await graphUpdatePortrolio(id);
