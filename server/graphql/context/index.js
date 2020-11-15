@@ -1,7 +1,25 @@
-const authenticateUser = ({ email, password }) => {
-  console.log(`Authenticating user: ${email}`);
+const passport = require('passport');
 
-  return true;
+const authenticateUser = (options) => {
+  
+
+  return new Promise((resolve, reject) => {
+
+    const done = (error, user) => {
+      if (error) { return reject(new Error(error)) }
+
+      if (user) {
+        return resolve(user);
+      } else {
+        return reject(new Error('Invalid passport or email!'));
+      }
+    }
+  
+    const authFn = passport.authenticate('graphql', options, done);
+    authFn();
+  
+    return true;
+  })
 }
 
 exports.buildAuthContext = () => {

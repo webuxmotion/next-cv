@@ -13,14 +13,14 @@ class User {
     return result._id;
   }
 
-  signIn(data, ctx) {
-    const isAuthenticated = ctx.authenticate(data);
+  async signIn(data, ctx) {
+    try {
+      const user = await ctx.authenticate(data);
 
-    if (isAuthenticated) {
-      console.log('User is Authenticated!');
+      return user;
+    } catch (error) {
+      return error;
     }
-
-    return `signIn... output!`;
   }
 
   signOut() {
