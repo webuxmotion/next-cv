@@ -16,4 +16,6 @@ exports.init = (server, db) => {
   }
 
   server.use(session(sessionParams));
+  server.use(passport.initialize());
+  server.use(passport.session());
 }

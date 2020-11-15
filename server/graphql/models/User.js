@@ -23,8 +23,14 @@ class User {
     }
   }
 
-  signOut() {
-    return 'signOut...';
+  signOut(ctx) {
+    try {
+      ctx.logout();
+
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
 
