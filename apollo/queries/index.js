@@ -38,8 +38,8 @@ export const CREATE_PORTFOLIO = gql`
       location: "Spain"
       jobTitle: "Front end engineer"
       description: "Work, work"
-      startDate: "01/01/2014"
-      endDate: "01/01/2016"
+      startDate: "2012-12-12T23:59Z"
+      endDate: "2013-12-12T23:59Z"
     }) {
       _id,
       title,
@@ -63,8 +63,8 @@ export const UPDATE_PORTFOLIO = gql`
       location: "Spain updated"
       jobTitle: "Front end engineer updated"
       description: "Work, work"
-      startDate: "01/01/2020"
-      endDate: "01/01/2020"
+      startDate: "2012-12-12T23:59Z"
+      endDate: "2013-12-12T23:59Z"
     }) {
       _id,
       title,

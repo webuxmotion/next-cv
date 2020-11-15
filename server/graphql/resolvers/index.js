@@ -1,3 +1,5 @@
+const Portfolio = require('../../db/models/portfolio');
+
 const data = {
   portfolios: [
     {
@@ -37,43 +39,16 @@ const data = {
 }
 
 exports.portfolioQueries = {
-  hello: () => {
-    return 'Hello World!'
-  },
-  portfolio: (_, { id }) => {
-    const portfolio = data.portfolios.find(item => item._id === id);
-
-    return portfolio;
-  },
-  portfolios: () => {
-    return data.portfolios
-  }
+  portfolio: (_, { id }) => Portfolio.findById(id),
+  portfolios: () => Portfolio.find({})
 }
 
 exports.portfolioMutations = {
-  createPortfolio: (_, { input }) => {
-    const _id = require('crypto').randomBytes(10).toString('hex');
-    const newPortfolio = { ...input, _id };
-    
-    data.portfolios.push(newPortfolio);
+  createPortfolio: (_, { input }) => Portfolio.create(input),
+  updatePortfolio: (_, { id, input }) => Portfolio.findOneAndUpdate({ _id: id }, input, { new: true }),
+  deletePortfolio: async (_, { id }) => {
+    const deletedPortfolio = await Portfolio.findOneAndRemove({ _id: id });
 
-    return newPortfolio;
-  },
-  updatePortfolio: (_, { id, input }) => {
-    const index = data.portfolios.findIndex(p => p._id === id);
-    const oldPortfolio = data.portfolios[index];
-    const newPortfolio = {...oldPortfolio, ...input};
-    data.portfolios[index] = newPortfolio;
-
-    return newPortfolio;
-  },
-  deletePortfolio: (_, { id }) => {
-    const index = data.portfolios.findIndex(p => p._id === id);
-    
-    if (index !== -1) {
-      data.portfolios.splice(index, 1);
-    }
-
-    return id;
+    return deletedPortfolio._id;
   }
 }
