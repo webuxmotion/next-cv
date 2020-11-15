@@ -1,14 +1,23 @@
 const mongoose = require('mongoose');
 const { ApolloServer, gql } = require('apollo-server-express');
 
-const { portfolioTypes } = require('./types');
-const { portfolioQueries, portfolioMutations } = require('./resolvers');
+const { 
+  portfolioTypes,
+  userTypes,
+} = require('./types');
+const { 
+  portfolioQueries, 
+  portfolioMutations,
+  userMutations,
+} = require('./resolvers');
 
 const Portfolio = require('./models/Portfolio');
+const User = require('./models/User');
 
 exports.createApolloServer = () => {
   const typeDefs = gql`
     ${portfolioTypes}
+    ${userTypes}
 
     type Query {
       portfolio(id: ID): Portfolio
@@ -19,6 +28,10 @@ exports.createApolloServer = () => {
       createPortfolio(input: PortfolioInput): Portfolio
       updatePortfolio(id: ID, input: PortfolioInput): Portfolio
       deletePortfolio(id: ID): ID
+
+      signUp(input: SignUpInput): String
+      signIn: String
+      signOut: String
     }
   `;
 
@@ -27,7 +40,8 @@ exports.createApolloServer = () => {
       ...portfolioQueries
     },
     Mutation: {
-      ...portfolioMutations
+      ...portfolioMutations,
+      ...userMutations
     }
   }
 
@@ -36,7 +50,8 @@ exports.createApolloServer = () => {
     resolvers,
     context: () => ({
       models: {
-        Portfolio: new Portfolio(mongoose.model('Portfolio'))
+        Portfolio: new Portfolio(mongoose.model('Portfolio')),
+        User: new User(mongoose.model('User'))
       }
     })
   });

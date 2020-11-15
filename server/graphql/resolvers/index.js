@@ -1,5 +1,3 @@
-const Portfolio = require('../../db/models/portfolio');
-
 exports.portfolioQueries = {
   portfolio: (_, { id }, { models: { Portfolio }}) => Portfolio.getById(id),
   portfolios: (_, __, { models: { Portfolio }}) => Portfolio.getAll()
@@ -12,5 +10,17 @@ exports.portfolioMutations = {
     const deletedPortfolio = await Portfolio.delete({ _id: id });
 
     return deletedPortfolio._id;
+  }
+}
+
+exports.userMutations = {
+  signUp: (_, { input }, { models: { User }}) => {
+    return User.signUp(input);
+  },
+  signIn: (_, __, { models: { User }}) => {
+    return User.signIn();
+  },
+  signOut: (_, __, { models: { User }}) => {
+    return User.signOut();
   }
 }
