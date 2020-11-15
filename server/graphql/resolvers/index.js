@@ -17,8 +17,8 @@ exports.userMutations = {
   signUp: (_, { input }, { models: { User }}) => {
     return User.signUp(input);
   },
-  signIn: (_, __, { models: { User }}) => {
-    return User.signIn();
+  signIn: (_, { input }, { models: { User }, ...ctx}) => {
+    return User.signIn(input, ctx);
   },
   signOut: (_, __, { models: { User }}) => {
     return User.signOut();

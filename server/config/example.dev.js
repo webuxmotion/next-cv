@@ -1,3 +1,4 @@
 module.exports = {
-  DB_URI: `mongodb+srv://username:password@cluster0.gef3a.mongodb.net/dbname?retryWrites=true&w=majority`
+  DB_URI: 'mongodb+srv://username:password@cluster0.gef3a.mongodb.net/dbname?retryWrites=true&w=majority',
+  SESSION_SECRET: 'someSecret344'
 }

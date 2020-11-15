@@ -13,8 +13,14 @@ class User {
     return result._id;
   }
 
-  signIn() {
-    return 'signIn...';
+  signIn(data, ctx) {
+    const isAuthenticated = ctx.authenticate(data);
+
+    if (isAuthenticated) {
+      console.log('User is Authenticated!');
+    }
+
+    return `signIn... output!`;
   }
 
   signOut() {
