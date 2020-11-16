@@ -1,9 +1,12 @@
-import PortfolioCard from '@/components/portfolios/Card';
 import Link from 'next/link';
 import { getDataFromTree } from '@apollo/react-ssr';
 
 import withApollo from '@/hoc/withApollo';
-import { useGetPortfolios } from '@/apollo/actions'
+import { useGetPortfolios } from '@/apollo/actions';
+
+import BaseLayout from '@/layouts/BaseLayout';
+
+import PortfolioCard from '@/components/portfolios/Card';
 
 const Portfolios = () => {
   const { data, loading } = useGetPortfolios();
@@ -12,7 +15,7 @@ const Portfolios = () => {
   if (loading) return <h1>Loading...</h1>;
 
   return (
-    <>
+    <BaseLayout>
       <section className="section-title">
         <div className="px-2">
           <div className="pt-5 pb-4">
@@ -39,7 +42,7 @@ const Portfolios = () => {
           }
         </div>
       </section>
-    </>
+    </BaseLayout>
   )
 }
 

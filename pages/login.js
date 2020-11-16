@@ -1,6 +1,8 @@
 import withApollo from '@/hoc/withApollo';
 import { useSignIn } from '@/apollo/actions';
 
+import BaseLayout from '@/layouts/BaseLayout';
+
 import Redirect from '@/components/shared/Redirect';
 import Errors from '@/components/shared/Errors';
 import LoginForm from '@/components/forms/LoginForm';
@@ -9,7 +11,7 @@ const Login = () => {
   const [signIn, { data, error, loading }] = useSignIn();
 
   return (
-    <>
+    <BaseLayout>
       <div className="bwm-form mt-5">
         <div className="row">
           <div className="col-md-5 mx-auto">
@@ -25,7 +27,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>
+    </BaseLayout>
   );
 }
 
