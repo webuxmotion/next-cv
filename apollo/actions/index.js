@@ -38,4 +38,4 @@ export const useDeletePortfolio = () => useMutation(DELETE_PORTFOLIO, {
   }
 });
 
-export const userSignIn = () => useMutation(SIGN_IN)
+export const useSignIn = () => useMutation(SIGN_IN)
