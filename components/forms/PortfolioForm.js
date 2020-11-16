@@ -13,7 +13,7 @@ const PortfolioForm = ({ onSubmit }) => {
   }, [register]);
 
   const handleDateChange = (dateType, setDate) => date => {
-    setValue(dateType, (date && date.toISOString()) || date);
+    setValue(dateType, (date && new Date(date.setHours(0,0,0,0)).toISOString()) || date);
     setDate(date);
   }
 
