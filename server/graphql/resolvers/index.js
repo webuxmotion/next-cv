@@ -13,14 +13,18 @@ exports.portfolioMutations = {
   }
 }
 
+exports.userQueries = {
+  user: (_, __, { models: { User }, ...ctx }) => User.getAuthUser(ctx),
+}
+
 exports.userMutations = {
   signUp: (_, { input }, { models: { User }}) => {
     return User.signUp(input);
   },
-  signIn: (_, { input }, { models: { User }, ...ctx}) => {
+  signIn: (_, { input }, { models: { User }, ...ctx }) => {
     return User.signIn(input, ctx);
   },
-  signOut: (_, __, { models: { User }, ...ctx}) => {
+  signOut: (_, __, { models: { User }, ...ctx }) => {
     return User.signOut(ctx);
   }
 }
