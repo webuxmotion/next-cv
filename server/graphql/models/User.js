@@ -10,7 +10,7 @@ class User {
     }
 
     try {
-      return await this.Model.create(signUpData);
+      return (await this.Model.create(signUpData))._id;
     } catch (error) {
       if (error.code && error.code === 11000) {
         throw new Error(`Email: ${signUpData.email} already exists`);

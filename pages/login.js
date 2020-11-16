@@ -1,3 +1,12 @@
+import { Mutation } from 'react-apollo';
+
+import { SIGN_IN } from '@/apollo/queries';
+import withApollo from '@/hoc/withApollo';
+
+import Redirect from '@/components/shared/Redirect';
+import Errors from '@/components/shared/Errors';
+import LoginForm from '@/components/forms/LoginForm';
+
 const Login = () => {
 
   return (
@@ -6,25 +15,18 @@ const Login = () => {
         <div className="row">
           <div className="col-md-5 mx-auto">
             <h1 className="page-title">Login</h1>
-            <form>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password" />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-main bg-blue py-2 ttu">Submit</button>
-            </form>
+            <Mutation mutation={SIGN_IN}>
+              { 
+                (loginUser, { data, error }) => 
+                  <>
+                    <LoginForm onSubmit={loginData => {
+                      loginUser({ variables: loginData })
+                    }} />
+                    { data && data.signIn && <Redirect to="/portfolios" /> }
+                    { error && <Errors error={error} /> }
+                  </>
+              }
+            </Mutation>
           </div>
         </div>
       </div>
@@ -32,4 +34,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default withApollo(Login);
