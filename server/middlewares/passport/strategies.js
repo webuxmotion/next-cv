@@ -1,5 +1,3 @@
-
-
 const { Strategy } = require('passport-strategy');
 
 class GraphqlStrategy extends Strategy {
@@ -16,10 +14,9 @@ class GraphqlStrategy extends Strategy {
   }
 
   authenticate(_, options) {
-
     const done = (error, user, info) => {
-      if (error) { return this.error(error) }
-      if (!user) { return this.fail(401) }
+      if (error) { return this.error(error); }
+      if (!user) { return this.fail(401); }
 
       return this.success(user, info);
     }

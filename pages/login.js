@@ -6,7 +6,7 @@ import Errors from '@/components/shared/Errors';
 import LoginForm from '@/components/forms/LoginForm';
 
 const Login = () => {
-  const [signIn, { data, error }] = useSignIn();
+  const [signIn, { data, error, loading }] = useSignIn();
 
   return (
     <>
@@ -14,9 +14,12 @@ const Login = () => {
         <div className="row">
           <div className="col-md-5 mx-auto">
             <h1 className="page-title">Login</h1>
-            <LoginForm onSubmit={loginData => {
-              signIn({ variables: loginData })
-            }} />
+            <LoginForm
+              loading={loading}
+              onSubmit={loginData => {
+                signIn({ variables: loginData })
+              }}
+            />
             { data && data.signIn && <Redirect to="/" /> }
             { error && <Errors error={error} /> }
           </div>

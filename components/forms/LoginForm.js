@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-const LoginForm = ({ onSubmit }) => {
+const LoginForm = ({ onSubmit, loading }) => {
   const { register, handleSubmit } = useForm();
 
   return (
@@ -26,11 +26,13 @@ const LoginForm = ({ onSubmit }) => {
           id="password" />
       </div>
 
-      <button
-        type="submit"
-        className="btn btn-main bg-blue py-2 ttu"
-      >Login</button>
-
+      { loading && 'Sign In...' }
+      { !loading &&
+        <button
+          type="submit"
+          className="btn btn-main bg-blue py-2 ttu"
+        >Login</button>
+      }
     </form>
   )
 }

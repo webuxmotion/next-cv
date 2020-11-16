@@ -4,6 +4,7 @@ const passport = require('passport');
 const config = require('../config/dev');
 
 exports.init = (server, db) => {
+  
   require('./passport').init(passport);
 
   const sessionParams = {

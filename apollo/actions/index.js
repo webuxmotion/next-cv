@@ -6,6 +6,7 @@ import {
   UPDATE_PORTFOLIO, 
   DELETE_PORTFOLIO,
   SIGN_IN,
+  SIGN_OUT,
   GET_USER,
 } from '@/apollo/queries';
 
@@ -40,11 +41,14 @@ export const useDeletePortfolio = () => useMutation(DELETE_PORTFOLIO, {
 });
 
 export const useSignIn = () => useMutation(SIGN_IN, {
-  update(cache, { data: { signIn: signedInUser } }) {
+  update(cache, { data: { signIn: signedInUser }}) {
     cache.writeQuery({
       query: GET_USER,
       data: { user: signedInUser }
-    });
+    })
   }
 })
-export const useLazyGetUser = () => useLazyQuery(GET_USER)
+
+export const useLazyGetUser = () => useLazyQuery(GET_USER);
+
+export const useSignOut = () => useMutation(SIGN_OUT);

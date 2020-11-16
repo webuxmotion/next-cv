@@ -28,12 +28,11 @@ class User {
     }
   }
 
-  async signIn(data, ctx) {
+  async signIn(signInData, ctx) {
     try {
-      const user = await ctx.authenticate(data);
-
+      const user = await ctx.authenticate(signInData);
       return user;
-    } catch (error) {
+    } catch(error) {
       return error;
     }
   }
