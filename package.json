@@ -31,8 +31,10 @@
     "passport": "^0.4.1",
     "passport-strategy": "^1.0.0",
     "react": "^17.0.1",
+    "react-apollo": "^3.1.5",
     "react-bootstrap": "^1.0.0-beta.16",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.11.2"
   },
   "devDependencies": {
     "sass": "^1.29.0"
