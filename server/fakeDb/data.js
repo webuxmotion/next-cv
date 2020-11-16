@@ -2,28 +2,40 @@ const mongoose = require('mongoose');
 
 const user1Id = mongoose.Types.ObjectId();
 const user2Id = mongoose.Types.ObjectId();
+const user3Id = mongoose.Types.ObjectId();
 
 const data = {
   users: [
     {
       _id: user1Id,
       avatar: "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png",
-      email: "test1@gmail.com",
-      name: "Test User 1",
-      username: "Test11",
-      info: "Hello I am Filip and I am a developer!",
-      password: "filipfilip",
+      email: "admin@gmail.com",
+      name: "admin@gmail.com",
+      username: "admin@gmail.com",
+      info: "admin@gmail.com",
+      password: "admin@gmail.com",
       role: "admin"
     },
     {
       _id: user2Id,
-      avatar: "https://img.favpng.com/17/3/18/computer-icons-user-profile-male-png-favpng-ZmC9dDrp9x27KFnnge0jKWKBs.jpg",
-      email: "test2@gmail.com",
-      name: "Test User 2",
-      username: "Test22",
-      info: "Hello I am Test and I am a test!",
-      password: "testtest"
-    }
+      avatar: "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png",
+      email: "guest@gmail.com",
+      name: "guest@gmail.com",
+      username: "guest@gmail.com",
+      info: "guest@gmail.com",
+      password: "guest@gmail.com",
+      role: "guest"
+    },
+    {
+      _id: user3Id,
+      avatar: "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png",
+      email: "instructor@gmail.com",
+      name: "instructor@gmail.com",
+      username: "instructor@gmail.com",
+      info: "instructor@gmail.com",
+      password: "instructor@gmail.com",
+      role: "instructor"
+    },
   ],
   portfolios: [
     {
@@ -46,7 +58,7 @@ const data = {
       description: 'Responsoble for parsing framework for JSON medical data.',
       startDate: '01/01/2011',
       endDate: '01/01/2013',
-      user: user1Id
+      user: user2Id
     },
     {
       title: 'Work in USA',
@@ -57,7 +69,7 @@ const data = {
       description: 'So much responsibility....Overloaaaaaad',
       startDate: '01/01/2010',
       endDate: '01/01/2011',
-      user: user1Id
+      user: user3Id
     }
   ],
 }
