@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 import { SIGN_UP } from '@/apollo/queries';
 import withApollo from '@/hoc/withApollo';
 import Redirect from '@/components/shared/Redirect';
+import Errors from '@/components/shared/Errors';
 
 const Register = () => {
 
@@ -20,9 +21,8 @@ const Register = () => {
                     <RegisterForm onSubmit={registerData => {
                       signUpUser({ variables: registerData })
                     }} />
-                    { 
-                      data && data.signUp && <Redirect to="/login" />
-                    }
+                    { data && data.signUp && <Redirect to="/login" /> }
+                    { error && <Errors error={error} /> }
                   </>
               }
             </Mutation>

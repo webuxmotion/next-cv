@@ -8,9 +8,16 @@ class User {
     if (signUpData.password !== signUpData.passwordConfirmation) {
       throw new Error('Password must be the same as confirmation password!');
     }
-    const result = await this.Model.create(signUpData);
 
-    return result._id;
+    try {
+      return await this.Model.create(signUpData);
+    } catch (error) {
+      if (error.code && error.code === 11000) {
+        throw new Error(`Email: ${signUpData.email} already exists`);
+      }
+      
+      throw error;
+    }
   }
 
   async signIn(data, ctx) {
