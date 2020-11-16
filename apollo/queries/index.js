@@ -123,4 +123,13 @@ export const SIGN_IN = gql`
   }
 `;
 
+export const GET_USER = gql`
+  query User {
+    user {
+      _id
+      username
+    }
+  }
+`;
+
 // AUTH QUERIES END -------------------------------------
