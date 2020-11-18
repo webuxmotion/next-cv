@@ -10,15 +10,20 @@ class Portfolio {
     return this.Model.find({})
   }
 
+  getAllByUser() {
+    this._checkAuth();
+
+    return this.Model.find({ user: this.user._id}).sort({ startDate: 'desc' })
+  }
+
   getById(id) {
     return this.Model.findById(id)
   }
 
   create(data) {
-    if (!this.user || !this.writeRights.includes(this.user.role)) {
-      throw new Error('Not Authorize');
-    }
+    this._checkAuth();
     data.user = this.user;
+
     return this.Model.create(data)
   }
 
@@ -28,6 +33,12 @@ class Portfolio {
 
   delete(id) {
     return this.Model.findOneAndRemove({ _id: id });
+  }
+
+  _checkAuth() {
+    if (!this.user || !this.writeRights.includes(this.user.role)) {
+      throw new Error('Not Authorize');
+    }
   }
 }
 

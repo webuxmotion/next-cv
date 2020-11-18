@@ -1,6 +1,7 @@
 exports.portfolioQueries = {
   portfolio: (_, { id }, { models: { Portfolio }}) => Portfolio.getById(id),
-  portfolios: (_, __, { models: { Portfolio }}) => Portfolio.getAll()
+  portfolios: (_, __, { models: { Portfolio }}) => Portfolio.getAll(),
+  userPortfolios: (_, __, { models: { Portfolio }}) => Portfolio.getAllByUser()
 }
 
 exports.portfolioMutations = {

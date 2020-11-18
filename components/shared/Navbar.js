@@ -42,7 +42,15 @@ const NavbarComponent = () => {
                   <span className="nav-link mr-4">Welcome {user.username}</span>
                   <NavDropdown title="Manage" id="basic-nav-dropdown" className="mr-3">
                     { (user.role === 'admin' || user.role === 'instructor') &&
-                      <AppLink href="/portfolios/new" className="dropdown-item">Create portfolio</AppLink>
+                      <>
+                        <AppLink href="/portfolios/new" className="dropdown-item">Create portfolio</AppLink>
+                        <AppLink 
+                          href="/instructor/[id]/dashboard"
+                          as={`/instructor/${user._id}/dashboard`}
+                          className="dropdown-item"
+                          
+                        >Dashboard</AppLink>
+                      </>
                     }
                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
