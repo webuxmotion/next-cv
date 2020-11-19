@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import withApollo from '@/hoc/withApollo';
 import withAuth from '@/hoc/withAuth';
-import { useGetPortfolio } from '@/apollo/actions';
+import { useGetPortfolio, useUpdatePortfolio } from '@/apollo/actions';
 
 import BaseLayout from '@/layouts/BaseLayout';
 
@@ -13,6 +13,7 @@ const PortfolioEdit = withAuth(() => {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useGetPortfolio({ variables: { id }});
+  const [updatePortfolio, { error }] = useUpdatePortfolio();
   
   return (
     <BaseLayout>
@@ -23,9 +24,12 @@ const PortfolioEdit = withAuth(() => {
             { data &&
               <PortfolioForm
                 initialData={data.portfolio}
-                onSubmit={() => {}}
+                onSubmit={
+                  (inputData) => updatePortfolio({ variables: { id, ...inputData }})
+                }
               />
             }
+            { error && <Errors error={error} /> }
           </div>
         </div>
       </div>
