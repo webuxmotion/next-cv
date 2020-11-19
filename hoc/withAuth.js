@@ -1,5 +1,6 @@
 import { useGetUser } from '@/apollo/actions';
 import Redirect from '@/components/shared/Redirect';
+import Spinner from '@/components/shared/Spinner';
 
 const withAuth = (WrappedComponent, role, options = { ssr: false }) => {
   function WithAuth(props) {
@@ -10,8 +11,7 @@ const withAuth = (WrappedComponent, role, options = { ssr: false }) => {
       (!user || error) &&
       typeof window !== 'undefined'
     ) {
-      return <Redirect
-        to="/login"
+      return <Redirect to="/login"
         query={{
           message: 'NOT_AUTHENTICATED',
         }}
@@ -20,8 +20,7 @@ const withAuth = (WrappedComponent, role, options = { ssr: false }) => {
 
     if (user) {
       if (role && !role.includes(user.role)) {
-        return <Redirect
-          to="/login"
+        return <Redirect to="/login"
           query={{
             message: 'NOT_AUTHORIZED',
           }}
@@ -31,7 +30,7 @@ const withAuth = (WrappedComponent, role, options = { ssr: false }) => {
       return <WrappedComponent {...props} />
     }
 
-    return <p>Loading...</p>;
+    return <div className="spinner-container"><Spinner /></div>;
   }
 
   if (options.ssr) {
