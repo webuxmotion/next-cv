@@ -1,6 +1,7 @@
 import Navbar from "@/components/shared/Navbar";
 import Hero from "@/components/shared/Hero";
 import Footer from "@/components/shared/Footer";
+import { ToastContainer } from 'react-toastify';
 
 const BaseLayouts = ({ children, page = '' }) => {
   const isHomePage = () => page === 'Home';
@@ -13,6 +14,7 @@ const BaseLayouts = ({ children, page = '' }) => {
         {children}
       </div>
       {isHomePage() && <Footer />}
+      <ToastContainer />
     </div>
   )
 }

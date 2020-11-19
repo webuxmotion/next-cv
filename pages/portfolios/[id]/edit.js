@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import withApollo from '@/hoc/withApollo';
 import withAuth from '@/hoc/withAuth';
@@ -14,6 +15,11 @@ const PortfolioEdit = withAuth(() => {
   const { id } = router.query;
   const { data } = useGetPortfolio({ variables: { id }});
   const [updatePortfolio, { error }] = useUpdatePortfolio();
+
+  const handlePortfolioUpdate = async (inputData) => {
+    await updatePortfolio({ variables: { id, ...inputData }});
+    toast.success('Portfolio has been updated!');
+  }
   
   return (
     <BaseLayout>
@@ -24,9 +30,7 @@ const PortfolioEdit = withAuth(() => {
             { data &&
               <PortfolioForm
                 initialData={data.portfolio}
-                onSubmit={
-                  (inputData) => updatePortfolio({ variables: { id, ...inputData }})
-                }
+                onSubmit={handlePortfolioUpdate}
               />
             }
             { error && <Errors error={error} /> }
