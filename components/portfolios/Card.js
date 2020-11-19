@@ -1,3 +1,5 @@
+import { formatDate } from '@/utils/functions';
+
 const Card = ({ portfolio: { title, jobTitle, description, startDate, endDate } }) => {
   return (
     <div className="card subtle-shadow no-border">
@@ -7,7 +9,8 @@ const Card = ({ portfolio: { title, jobTitle, description, startDate, endDate } 
         <p className="card-text fs-2">{description}</p>
       </div>
       <div className="card-footer no-border">
-        <small className="text-muted">{startDate} - {endDate}</small>
+        <small className="text-muted">{formatDate(startDate)} - {(endDate && formatDate(endDate)) || 'Present'}</small>
+        
       </div>
     </div>
   )

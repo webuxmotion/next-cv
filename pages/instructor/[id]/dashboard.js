@@ -6,6 +6,7 @@ import Link from 'next/link';
 import withApollo from '@/hoc/withApollo';
 import withAuth from '@/hoc/withAuth';
 import { useGetUserPortfolios, useDeletePortfolio } from '@/apollo/actions';
+import { formatDate } from '@/utils/functions';
 
 import BaseLayout from '@/layouts/BaseLayout';
 
@@ -28,7 +29,8 @@ const InstructorDashboard = withAuth(() => {
                 <Card.Body>
                   <Card.Title>{p.title}</Card.Title>
                   <Card.Text>
-                    {p.startDate} - {p.endDate}
+                    {formatDate(p.startDate)} - {(p.endDate && formatDate(p.endDate)) || 'Present'}
+                    
                   </Card.Text>
                   <Link
                     href="/portfolios/[id]/edit"

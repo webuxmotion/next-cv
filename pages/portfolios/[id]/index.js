@@ -3,6 +3,7 @@ import { getDataFromTree } from '@apollo/react-ssr';
 
 import withApollo from '@/hoc/withApollo';
 import { useGetPortfolio } from '@/apollo/actions';
+import { formatDate } from '@/utils/functions';
 
 import BaseLayout from '@/layouts/BaseLayout';
 
@@ -42,7 +43,7 @@ const PortfolioDetail = ({ query: { id } }) => {
               <p className="text">{location}</p>
 
               <h4 className="title">Start Date</h4>
-              <p className="text">{startDate}</p>
+              <p className="text">{formatDate(startDate)}</p>
             </div>
 
             <div className="col-lg-6">
@@ -51,7 +52,7 @@ const PortfolioDetail = ({ query: { id } }) => {
               <p className="text">44</p>
 
               <h4 className="title">End Date</h4>
-              <p className="text">{endDate}</p>
+              <p className="text">{(endDate && formatDate(endDate)) || 'Present'}</p>
             </div>
             <div className="col-md-12">
               <hr />
