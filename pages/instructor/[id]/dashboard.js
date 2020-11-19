@@ -1,15 +1,17 @@
 import { useRouter } from 'next/router';
 import { Card, Button } from 'react-bootstrap';
 import { getDataFromTree } from '@apollo/react-ssr';
+import Link from 'next/link';
 
 import withApollo from '@/hoc/withApollo';
 import withAuth from '@/hoc/withAuth';
-import { useGetUserPortfolios } from '@/apollo/actions';
+import { useGetUserPortfolios, useDeletePortfolio } from '@/apollo/actions';
 
 import BaseLayout from '@/layouts/BaseLayout';
 
 const InstructorDashboard = withAuth(() => {
   const { data } = useGetUserPortfolios();
+  const [deletePortfolio] = useDeletePortfolio();
   const userPortfolios = (data && data.userPortfolios) || [];
   
   const router = useRouter();
@@ -28,7 +30,16 @@ const InstructorDashboard = withAuth(() => {
                   <Card.Text>
                     {p.startDate} - {p.endDate}
                   </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
+                  <Link
+                    href="/portfolios/[id]/edit"
+                    as={`/portfolios/${p._id}/edit`}
+                  >
+                    <a className="btn btn-warning mr-1">Update</a>
+                  </Link>
+                  <Button 
+                    variant="danger"
+                    onClick={() => deletePortfolio({ variables: { id: p._id } })}
+                  >Delete</Button>
                 </Card.Body>
               </Card>
               )

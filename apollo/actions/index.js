@@ -29,14 +29,14 @@ export const useCreatePortfolio = () => useMutation(CREATE_PORTFOLIO, {
 
 export const useDeletePortfolio = () => useMutation(DELETE_PORTFOLIO, {
   update(cache, { data: { deletePortfolio: deletedId } }) {
-    const { portfolios } = cache.readQuery({ query: GET_PORTFOLIOS });
-    const index = portfolios.findIndex(p => p._id === deletedId);
-    const newPortfolios = [...portfolios];
+    const { userPortfolios } = cache.readQuery({ query: GET_USER_PORTFOLIOS });
+    const index = userPortfolios.findIndex(p => p._id === deletedId);
+    const newPortfolios = [...userPortfolios];
     newPortfolios.splice(index, 1);
 
     cache.writeQuery({
-      query: GET_PORTFOLIOS,
-      data: { portfolios: newPortfolios }
+      query: GET_USER_PORTFOLIOS,
+      data: { userPortfolios: newPortfolios }
     });
   }
 });

@@ -48,14 +48,9 @@ const NavbarComponent = () => {
                           href="/instructor/[id]/dashboard"
                           as={`/instructor/${user._id}/dashboard`}
                           className="dropdown-item"
-                          
                         >Dashboard</AppLink>
                       </>
                     }
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                   </NavDropdown>
                   <AppLink href="/logout" className="nav-link btn btn-danger">Sign Out</AppLink>
                 </>
