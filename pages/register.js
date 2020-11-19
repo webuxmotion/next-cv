@@ -24,7 +24,12 @@ const Register = () => {
                     <RegisterForm onSubmit={registerData => {
                       signUpUser({ variables: registerData })
                     }} />
-                    { data && data.signUp && <Redirect to="/login" /> }
+                    { data && data.signUp && 
+                      <Redirect 
+                        to="/login"
+                        query={{ message: 'LOGGED_IN' }}
+                      />
+                    }
                     { error && <Errors error={error} /> }
                   </>
               }
