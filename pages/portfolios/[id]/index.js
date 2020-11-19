@@ -2,12 +2,12 @@ import { useQuery } from '@apollo/react-hooks';
 import { getDataFromTree } from '@apollo/react-ssr';
 
 import withApollo from '@/hoc/withApollo';
-import { GET_PORTFOLIO } from '@/apollo/queries';
+import { useGetPortfolio } from '@/apollo/actions';
 
 import BaseLayout from '@/layouts/BaseLayout';
 
 const PortfolioDetail = ({ query: { id } }) => {
-  const { data, loading } = useQuery(GET_PORTFOLIO, { variables: { id }});
+  const { data, loading } = useGetPortfolio({ variables: { id }})
   const portfolio = data && data.portfolio || {};
 
   if (loading) return <h1>Loading...</h1>;
