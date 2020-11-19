@@ -20,7 +20,8 @@ const PortfolioDetail = ({ query: { id } }) => {
     location,
     startDate,
     endDate,
-    description
+    description,
+    experienceDays,
   } = portfolio;
 
   return (
@@ -49,7 +50,7 @@ const PortfolioDetail = ({ query: { id } }) => {
             <div className="col-lg-6">
               {/* TODO: days later... */}
               <h4 className="title">Days</h4>
-              <p className="text">44</p>
+              <p className="text">{experienceDays}</p>
 
               <h4 className="title">End Date</h4>
               <p className="text">{(endDate && formatDate(endDate)) || 'Present'}</p>
